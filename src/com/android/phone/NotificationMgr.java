@@ -367,9 +367,14 @@ public class NotificationMgr {
                     .setContentText(notificationText)
                     .setContentIntent(pendingIntent)
                     .setSound(ringtoneUri)
-                    .setColor(res.getColor(R.color.dialer_theme_color))
+                    .setColor(res.getColor(R.color.dialer_theme_color)
+		    if ((Settings.System.getInt(mContext.getContentResolver(),
+			Settings.System.ONGOING_VOICEMAIL, 0) == 1)) {
                     .setOngoing(carrierConfig.getBoolean(
                             CarrierConfigManager.KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL));
+		    } else {
+		    .setOngoing(false)
+		    }
 
             if (VoicemailNotificationSettingsUtil.isVibrationEnabled(phone)) {
                 builder.setDefaults(Notification.DEFAULT_VIBRATE);
